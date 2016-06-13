@@ -220,4 +220,42 @@ public class UserDaoImpl
         return user;
     }
 
+    @Override
+    public boolean updateUser(User user) {
+
+        String sql = "UPDATE USER SET username=?,password=?,role=?,firstName=?,lastName=?,team=? WHERE id=?";
+
+        Connection conn = null;
+        boolean result = false;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, user.getUserId());
+            ps.setString(2, user.getPassw());
+            ps.setInt(3, user.getRole());
+            ps.setString(4, user.getFirstName());
+            ps.setString(5, user.getLastName());
+            ps.setString(6, user.getTeam());
+            ps.setLong(7, user.getId());
+            int number = ps.executeUpdate();
+            if (number != 0) {
+                result = true;
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        return result;
+    }
+
 }

@@ -18,4 +18,6 @@ public interface UserDao {
 
     public boolean resetPassword(int id, String password);
 
+    public boolean updateUser(User user);
+
 }
