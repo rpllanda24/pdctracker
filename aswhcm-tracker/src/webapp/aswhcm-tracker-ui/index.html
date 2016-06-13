@@ -5,22 +5,36 @@
 
 <link href="css/main.css" rel="stylesheet" />
 <!-- Include AngularJS library -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <title>ASWHCM Tracker</title>
 </head>
 <body ng-app="aswhcm-tracker">
 
 		<div class="container">
-			<div id="logo">
+			<div class="logo">
 			<img class="logo" src="img/Logo.png" />
 			</div>
 
-			<div id="login">
-				<login-info></login-info>
+			<div class="login">
+				<div ng-controller="LoginController">
+					<table>
+							<tr>
+									<td><p>Username:</p> </td>
+									<td><input class="textbox" name="username" /></td>
+							</tr>
+							<tr>
+								<td><p>Password: </p></td>
+								<td><input class="textbox" type="password" name="pass" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" style="text-align: right;"><button class="button">Login</button></td>
+							</tr>
+					</table>
+				</div>
 			</div>
 
-			<div id="footer">
-			Copyright © Human Capital Management . Accenture Software
+			<div class="footer">
+			Copyright &#169; Accenture Software - Human Capital Management
 			</div>
 
 		</div>
@@ -35,7 +49,6 @@
     <!-- Services -->
 
     <!-- Directives -->
-		<script src="js/directives/login.js"></script>
 
 </body>
 </html>
