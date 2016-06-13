@@ -57,10 +57,41 @@ public class TeamDaoImpl
         return teams;
     }
 
-    @Override
+    public Team getTeam(int id) {
+
+        String sql = "SELECT * FROM TEAM  WHERE ID = ?";
+
+        Connection conn = null;
+        Team team = null;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                team = new Team(rs.getInt("id"), rs.getString("team_code"), rs.getString("team_code"));
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        return team;
+    }
+
     public boolean createTeam(Team team) {
 
-        String sql = "INSERT INTO TEAM team_code=?,team_desc=?";
+        String sql = "INSERT INTO ASWHCMTRACKER.TEAM (team_code,team_desc) VALUES (?,?)";
 
         Connection conn = null;
         boolean result = false;
@@ -94,8 +125,7 @@ public class TeamDaoImpl
     @Override
     public boolean updateTeam(Team team) {
 
-        String sql = "INSERT INTO TEAM team_code=?,team_desc=? WHERE id=?";
-
+        String sql = "UPDATE ASWHCMTRACKER.TEAM SET team_code=?,team_desc=? WHERE id=?";
         Connection conn = null;
         boolean result = false;
 
@@ -105,6 +135,7 @@ public class TeamDaoImpl
 
             ps.setString(1, team.getTeamCode());
             ps.setString(2, team.getTeamDesc());
+            ps.setLong(3, team.getId());
             int number = ps.executeUpdate();
             if (number != 0) {
                 result = true;
@@ -125,10 +156,9 @@ public class TeamDaoImpl
 
     }
 
-    @Override
     public boolean deleteTeam(int id) {
 
-        String sql = "DELETE FROM TEAM where id = ?";
+        String sql = "DELETE FROM ASWHCMTRACKER.TEAM where id = ?";
         Connection conn = null;
         boolean result = false;
         try {
@@ -154,13 +184,6 @@ public class TeamDaoImpl
         }
         return result;
 
-    }
-
-    @Override
-    public Team getTeam(int Id) {
-
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

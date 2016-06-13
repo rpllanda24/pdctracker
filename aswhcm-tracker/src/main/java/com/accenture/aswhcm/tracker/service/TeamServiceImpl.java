@@ -1,54 +1,62 @@
 package com.accenture.aswhcm.tracker.service;
 
-import org.apache.commons.lang.Validate;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.accenture.aswhcm.tracker.dao.TeamDao;
 import com.accenture.aswhcm.tracker.domain.Team;
 
+@Service("teamService")
 public class TeamServiceImpl
     implements TeamService {
 
+    private TeamDao teamDao;
+
+    public TeamDao getTeamDao() {
+
+        return teamDao;
+    }
+
     @Autowired
-    TeamDao teamDao;
+    public void setTeamDao(TeamDao teamDao) {
 
-    @Override
-    public int createTeam(Team team) {
+        this.teamDao = teamDao;
+    }
 
-        Validate.isTrue(team.getTeamCode() != null);
-        Validate.isTrue(team.getTeamDesc() != null);
+    public List<Team> getTeams() {
 
-        boolean isCreated;
-        int created = 0;
-        isCreated = teamDao.createTeam(team);
-        if (isCreated) {
-            created = 1;
-        }
-        return created;
+        return getTeamDao().getTeams();
+    }
+
+    public Team getTeam(int id) throws IllegalArgumentException {
+
+        Validate.isTrue(id > 0, "invalid ID");
+        return getTeamDao().getTeam(id);
+    }
+
+    public boolean createTeam(Team team) throws IllegalArgumentException {
+
+        Validate.isTrue(team != null, "Team is null");
+        Validate.isTrue(StringUtils.isNotBlank(team.getTeamCode()), "team code is blank/null");
+        Validate.isTrue(StringUtils.isNotBlank(team.getTeamDesc()), "team description is blank/null");
+        return getTeamDao().createTeam(team);
     }
 
     @Override
-    public int updateTeam(Team team) {
+    public boolean updateTeam(Team team) throws IllegalArgumentException {
 
-        Validate.isTrue(team.getTeamCode() != null);
-        Validate.isTrue(team.getTeamDesc() != null);
-
-        boolean isUpdated;
-        int updated = 0;
-        isUpdated = teamDao.createTeam(team);
-        if (isUpdated) {
-            updated = 1;
-        }
-        return updated;
+        Validate.isTrue(team != null, "Team is null");
+        return getTeamDao().updateTeam(team);
     }
 
-    @Override
-    public void deleteTeam(int id) {
+    public boolean deleteTeam(int id) throws IllegalArgumentException {
 
-        Validate.notNull(id);
-
-        teamDao.deleteTeam(id);
-
+        Validate.isTrue(id > 0, "Invalid ID");
+        return getTeamDao().deleteTeam(id);
     }
 
 }

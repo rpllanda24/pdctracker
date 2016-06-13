@@ -8,7 +8,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/aswhcmtracker" />
 		<property name="username" value="root" />
-		<property name="password" value="Apheng22" />
+		<property name="password" value="password" />
 	</bean>
 
 	<!-- DAOs -->
@@ -19,6 +19,9 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<bean id="leaveTrackerDao" class="com.accenture.aswhcm.tracker.dao.LeaveTrackerDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="teamDao" class="com.accenture.aswhcm.tracker.dao.TeamDaoImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 </beans>

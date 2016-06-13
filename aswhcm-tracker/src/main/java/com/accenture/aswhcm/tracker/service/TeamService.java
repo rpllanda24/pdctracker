@@ -4,10 +4,14 @@ import com.accenture.aswhcm.tracker.domain.Team;
 
 public interface TeamService {
 
-    public int createTeam(Team team);
+    // public List<Team> getTeams();
 
-    public int updateTeam(Team team);
+    // public Team getTeam(int id) throws IllegalArgumentException;
 
-    public void deleteTeam(int id);
+    public boolean createTeam(Team team) throws IllegalArgumentException;
+
+    public boolean updateTeam(Team team) throws IllegalArgumentException;
+
+    public boolean deleteTeam(int id) throws IllegalArgumentException;
 
 }

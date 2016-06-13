@@ -2,10 +2,12 @@ package com.accenture.aswhcm.tracker.service;
 
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.accenture.aswhcm.tracker.dao.UserDao;
 import com.accenture.aswhcm.tracker.domain.User;
 
+@Service("maintenanceService")
 public class MaintenanceServiceImpl
     implements MaintenanceService {
 
@@ -21,12 +23,12 @@ public class MaintenanceServiceImpl
         Validate.isTrue(user.getLastName() != null);
 
         boolean isCreated;
-        int created = 0;
+        int added = 0;
         isCreated = userDao.createUser(user);
         if (isCreated) {
-            created = 1;
+            added = 1; // true
         }
-        return created;
+        return added;
     }
 
     @Override
@@ -41,9 +43,9 @@ public class MaintenanceServiceImpl
         int updated = 0;
         isUpdated = userDao.updateUser(user);
         if (isUpdated) {
-            updated = 1;
+            updated = 1; // true
         }
-        return 0;
+        return updated;
     }
 
     @Override
