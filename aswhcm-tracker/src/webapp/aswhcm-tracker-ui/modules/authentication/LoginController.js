@@ -1,15 +1,13 @@
 angular.module('Login')
-.controller('LoginController', function($scope){
-	$scope.username = "test";
-	$scope.password = "test";
+.controller('LoginController', function($scope, $http){
 
 	$scope.count = 0;
 	
 	$scope.SendData = function(){
-		var data = $.param({
+		var request = {
 			userId : $scope.username,
 			passw : $scope.password
-		});
+		};
 		
 		var config = {
 				headers : {
@@ -18,8 +16,17 @@ angular.module('Login')
 				}
 		}
 		
+		$http.post('/aswhcm-tracker/service/authenticate', request, config)
+        .success(function (data, status, headers, config) {
+    		$scope.response = data;
+        })
+        .error(function (data, status, header, config) {
+            $scope.response = "Data: " + data +
+                "<hr />status: " + status +
+                "<hr />headers: " + header +
+                "<hr />config: " + config;
+        });
 
-		$scope.count = $scope.count + 1;;
 	};
 	
 });
