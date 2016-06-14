@@ -8,15 +8,16 @@
       <table>
           <tr>
               <td><p>Username:</p> </td>
-              <td><input class="textbox" name="username" /></td>
+              <td><input class="textbox" name="username" ng-model="username" required/></td>
           </tr>
           <tr>
             <td><p>Password: </p></td>
-            <td><input class="textbox" type="password" name="pass" /></td>
+            <td><input class="textbox" type="password" name="pass" ng-model="password" required/></td>
           </tr>
           <tr>
-            <td colspan="2" style="text-align: right;"><button class="button">Login</button></td>
+            <td colspan="2" style="text-align: right;"><button class="button" ng-click="SendData()">Login</button></td>
           </tr>
+          {{response}}
       </table>
     </form>
   </div>
