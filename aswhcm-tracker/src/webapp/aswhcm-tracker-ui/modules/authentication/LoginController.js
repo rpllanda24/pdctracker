@@ -4,6 +4,10 @@ angular.module('Login')
 	$scope.count = 0;
 	
 	$scope.SendData = function(){
+		
+		if($scope.username && $scope.password)
+			{
+		
 		var request = {
 			userId : $scope.username,
 			passw : $scope.password
@@ -18,7 +22,14 @@ angular.module('Login')
 		
 		$http.post('/aswhcm-tracker/service/authenticate', request, config)
         .success(function (data, status, headers, config) {
-    		$scope.response = data;
+        	var success = data.success;
+        	if (success == true)
+        		{
+        		$scope.response = data.results + " has succesfully logged in";
+        		}
+        	else{
+        		$scope.response = data.results.cause;
+        		}
         })
         .error(function (data, status, header, config) {
             $scope.response = "Data: " + data +
@@ -26,6 +37,7 @@ angular.module('Login')
                 "<hr />headers: " + header +
                 "<hr />config: " + config;
         });
+			}
 
 	};
 	
